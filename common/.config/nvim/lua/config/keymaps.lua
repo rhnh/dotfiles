@@ -27,18 +27,29 @@ map("n", "<S-h>", "<cmd>bprevious<CR>", { desc = "Prev buffer" })
 map("n", "<S-l>", "<cmd>bnext<CR>", { desc = "Next buffer" })
 map("n", "<leader>bd", "<cmd>bdelete<CR>", { desc = "Delete buffer" })
 
+--open key binds
+map("n", "<leader>ek", "<cmd>edit ~/.config/nvim/lua/config/keymaps.lua<CR>", {
+	desc = "Edit keybindings",
+})
 
 -- Splits
 map("n", "<leader>sv", "<cmd>vsplit<CR>", { desc = "Vertical split" })
 map("n", "<leader>sh", "<cmd>split<CR>", { desc = "Horizontal split" })
 map("n", "<leader>se", "<C-w>=", { desc = "Equalize splits" })
 map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close split" })
+
+-- tree
+map("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", {
+	desc = "Toggle file explorer",
+})
 ---------------------------------------------------------------------
 -- PLUGINS (each call lazy-loads the plugin on first use)
 ---------------------------------------------------------------------
 -- Telescope
 local function tb(fn, opts)
-	return function() require("telescope.builtin")[fn](opts) end
+	return function()
+		require("telescope.builtin")[fn](opts)
+	end
 end
 map("n", "<leader>ff", tb("find_files"), { desc = "Find files" })
 map("n", "<leader>fg", tb("live_grep"), { desc = "Grep" })
@@ -47,6 +58,26 @@ map("n", "<leader>fh", tb("help_tags"), { desc = "Help" })
 map("n", "<leader>fr", tb("oldfiles"), { desc = "Recent files" })
 map("n", "<leader>fd", tb("diagnostics"), { desc = "Diagnostics" })
 map("n", "<leader>fs", tb("lsp_document_symbols"), { desc = "Symbols" })
+map("n", "<leader>fa", function()
+	require("telescope.builtin").find_files({
+		cwd = vim.fn.expand("~"),
+		find_command = {
+			"fdfind",
+			"--type",
+			"f",
+			"--hidden",
+			"--exclude",
+			".git",
+			"--exclude",
+			"node_modules",
+			"--exclude",
+			".cache",
+			"--exclude",
+			".local/share",
+		},
+	})
+end, { desc = "Find files in home directory" })
+-- copy and paste
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "Copy to system clipboard" })
 map({ "n", "v" }, "<leader>p", '"+p', { desc = "Paste from system clipboard" })
 
@@ -82,11 +113,31 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			b.code_action({ context = { only = { "source.removeUnused.ts" } }, apply = true })
 		end, "Remove unused imports")
 		lmap("<leader>e", vim.diagnostic.open_float, "Line diagnostics")
-		lmap("[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, "Prev diagnostic")
-		lmap("]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, "Next diagnostic")
+		lmap("[d", function()
+			vim.diagnostic.jump({ count = -1, float = true })
+		end, "Prev diagnostic")
+		lmap("]d", function()
+			vim.diagnostic.jump({ count = 1, float = true })
+		end, "Next diagnostic")
 	end,
 })
 
+-- Git
+map("n", "<leader>gg", "<cmd>Git<CR>", {
+	desc = "Git status",
+})
+
+map("n", "<leader>gc", "<cmd>Git commit<CR>", {
+	desc = "Git commit",
+})
+
+map("n", "<leader>gp", "<cmd>Git push<CR>", {
+	desc = "Git push",
+})
+
+map("n", "<leader>gb", "<cmd>Git blame<CR>", {
+	desc = "Git blame",
+})
 ---------------------------------------------------------------------
 -- COMPLETION (consumed by plugins/completion.lua)
 ---------------------------------------------------------------------
