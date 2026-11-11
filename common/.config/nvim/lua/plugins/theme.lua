@@ -1,4 +1,4 @@
---[[return {
+return {
 	{
 		"folke/tokyonight.nvim",
 		lazy = false,
@@ -7,71 +7,85 @@
 			vim.cmd.colorscheme("tokyonight")
 		end,
 	},
-}
-
-return {
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
+		{
+			"catppuccin/nvim",
+			name = "catppuccin",
+			priority = 1000,
+			config = function()
+				require("catppuccin").setup({
+					flavour = "mocha",
+				})
+
+				vim.cmd.colorscheme("catppuccin")
+			end,
+		},
+	},
+	{
+		{
+			"catppuccin/nvim",
+			name = "catppuccin",
+			priority = 1000,
+			config = function()
+				require("catppuccin").setup({
+					flavour = "latte",
+					transparent_background = false,
+
+					integrations = {
+						treesitter = true,
+						native_lsp = {
+							enabled = true,
+						},
+						cmp = true,
+						gitsigns = true,
+						nvimtree = true,
+						telescope = {
+							enabled = true,
+						},
+					},
+				})
+
+				vim.cmd.colorscheme("catppuccin")
+			end,
+		},
+	},
+	{
+		{
+			"projekt0n/github-nvim-theme",
+			name = "github-theme",
+			priority = 1000,
+			config = function()
+				require("github-theme").setup({
+					options = {
+						transparent = false,
+						styles = {
+							comments = "italic",
+							keywords = "bold",
+						},
+					},
+				})
+
+				vim.cmd.colorscheme("github_light")
+			end,
+		},
+	},
+	{
+		"marekh19/meowsoot.nvim",
+		lazy = false,
 		priority = 1000,
 		config = function()
-			require("catppuccin").setup({
-				flavour = "mocha",
-			})
-
-			vim.cmd.colorscheme("catppuccin")
+			vim.cmd.colorscheme("meowsoot-dawn")
 		end,
 	},
-}
-
-
-return {
+	-- Using Lazy
 	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
+		"navarasu/onedark.nvim",
+		priority = 1000, -- make sure to load this before all the other start plugins
 		config = function()
-			require("catppuccin").setup({
-				flavour = "latte",
-				transparent_background = false,
-
-				integrations = {
-					treesitter = true,
-					native_lsp = {
-						enabled = true,
-					},
-					cmp = true,
-					gitsigns = true,
-					nvimtree = true,
-					telescope = {
-						enabled = true,
-					},
-				},
+			require("onedark").setup({
+				style = "darker",
 			})
-
-			vim.cmd.colorscheme("catppuccin")
-		end,
-	},
-}
-]]
-
-return {
-	{
-		"projekt0n/github-nvim-theme",
-		name = "github-theme",
-		priority = 1000,
-		config = function()
-			require("github-theme").setup({
-				options = {
-					transparent = false,
-					styles = {
-						comments = "italic",
-						keywords = "bold",
-					},
-				},
-			})
-
-			vim.cmd.colorscheme("github_light")
+			require("onedark").load()
 		end,
 	},
 }

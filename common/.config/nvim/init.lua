@@ -13,3 +13,21 @@ vim.opt.rtp:prepend(lazypath)
 vim.opt.clipboard = "unnamedplus"
 
 require("lazy").setup("plugins")
+
+local last_colorscheme = "default"
+print(vim.inspect(vim.g.colors_name))
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = function()
+		last_colorscheme = vim.g.colors_name or "default"
+	end,
+})
+
+vim.api.nvim_create_autocmd("VimResume", {
+	callback = function()
+		vim.defer_fn(function()
+			vim.cmd.colorscheme(last_colorscheme)
+			vim.cmd("redraw!")
+		end, 100)
+	end,
+})
