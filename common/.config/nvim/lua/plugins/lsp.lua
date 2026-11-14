@@ -19,6 +19,11 @@ return {
 		config = function()
 			-- TypeScript 7 language server
 			vim.lsp.config("tsc", {
+				capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), {
+					general = {
+						positionEncodings = { "utf-16" },
+					},
+				}),
 				settings = {
 					["js/ts"] = {
 						inlayHints = {
@@ -51,12 +56,15 @@ return {
 			vim.lsp.enable("tsc")
 			vim.lsp.enable("lua_ls")
 			vim.lsp.enable("jsonls")
+			vim.lsp.enable("oxlint")
 
 			-- Diagnostics
 			vim.diagnostic.config({
 				virtual_text = { prefix = "●" },
 				severity_sort = true,
-				float = { border = "rounded" },
+				float = {
+					border = "rounded",
+				},
 			})
 		end,
 	},

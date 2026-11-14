@@ -6,6 +6,9 @@ local M = {}
 ---------------------------------------------------------------------
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 map("n", "<leader>w", "<cmd>w<CR>", { desc = "Save" })
+map("n", "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
+map("i", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
+map("v", "<C-s>", "<Esc><cmd>w<CR>", { desc = "Save file" })
 map("n", "<leader>q", "<cmd>q<CR>", { desc = "Quit" })
 
 -- window navigation
@@ -37,6 +40,10 @@ map("n", "<leader>sv", "<cmd>vsplit<CR>", { desc = "Vertical split" })
 map("n", "<leader>sh", "<cmd>split<CR>", { desc = "Horizontal split" })
 map("n", "<leader>se", "<C-w>=", { desc = "Equalize splits" })
 map("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close split" })
+map("n", "<M-k>", "<cmd>resize +2<CR>", { desc = "Increase split height" })
+map("n", "<M-j>", "<cmd>resize -2<CR>", { desc = "Decrease split height" })
+map("n", "<M-h>", "<cmd>vertical resize -2<CR>", { desc = "Decrease split width" })
+map("n", "<M-l>", "<cmd>vertical resize +2<CR>", { desc = "Increase split width" })
 
 -- tree
 map("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", {
@@ -119,6 +126,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		lmap("]d", function()
 			vim.diagnostic.jump({ count = 1, float = true })
 		end, "Next diagnostic")
+		-- Import missing functions
+		lmap("<leader>ci", function()
+			b.code_action({
+				context = {
+					only = { "quickfix" },
+				},
+			})
+		end, "Import missing symbols")
 	end,
 })
 
