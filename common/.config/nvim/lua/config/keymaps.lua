@@ -153,6 +153,18 @@ map("n", "<leader>gp", "<cmd>Git push<CR>", {
 map("n", "<leader>gb", "<cmd>Git blame<CR>", {
 	desc = "Git blame",
 })
+
+-- multiple cursor
+---------------------------------------------------------------------
+-- MULTIPLE CURSORS
+---------------------------------------------------------------------
+map("n", "<leader>mc", "<Plug>(VM-Find-Under)", {
+	desc = "Add next matching cursor",
+})
+
+map("n", "<leader>ma", "<Plug>(VM-Select-All)", {
+	desc = "Select all matching words",
+})
 ---------------------------------------------------------------------
 -- COMPLETION (consumed by plugins/completion.lua)
 ---------------------------------------------------------------------

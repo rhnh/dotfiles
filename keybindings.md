@@ -109,3 +109,12 @@ Modes: **n** = normal, **v** = visual, **i** = insert
 | `<C-p>` | i | Previous item |
 | `<C-b>` | i | Scroll docs up |
 | `<C-f>` | i | Scroll docs down |
+
+## Multiple Cursors
+
+| Shortcut | Mode | Action |
+|---|---|---|
+| `<leader>mc` | Normal | Select word under cursor |
+| `<leader>mc` again | Multiple-cursor | Select next occurrence |
+| `<leader>ma` | Normal | Select all occurrences |
+| `Esc` | Multiple-cursor | Exit multiple-cursor mode |
